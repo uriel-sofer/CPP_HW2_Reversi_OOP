@@ -24,15 +24,17 @@ constexpr int COLUMNS = 8;
 class Board {
 private:
     square_state grid[ROWS][COLUMNS]{};
+
     square_state get(int row, char col) const;
-    void set(int row, char col, square_state state);
+
+    void set(int row, char col, char symbol);
 
     /**
      * returns true if the move flipped some pieces
      * @param playerMove
      * @param color
      */
-    bool isMoveValid(const std::string &playerMove, char color);
+    bool isMoveValid(const std::string &playerMove, char color) const;
 
     /**
      * checks if index is on the grid
@@ -64,28 +66,9 @@ private:
 
     square_state oppositeSymbol(char symbol) const;
 
-public:
-    /**
-     * Inits an empty board
-     */
-    Board();
+    void flipTokens(int row, int col, char symbol);
 
-    /**
-     * 
-     * @param playerMove string repressing the player's move. Can be QUIT, PASS or a place on the board (e.g. E5 or something)
-     * @param symbol
-     * @return true if the move was valid and was played successfully
-     */
-    bool insert(const std::string& playerMove, char symbol);
-
-    /**
-     * Prints the grid, hopefully with colors
-     */
-    void display() const;
-
-    bool allWhite() const;
-
-    bool allBlack() const;
+    bool canFlip(int row, int col, int dRow, int dCol, char symbol) const;
 
     /**
      * Checks if there is another token in any valid direction
@@ -100,6 +83,32 @@ public:
     bool checkAllyDiag(const std::string& playerMove, char color)const;
 
     bool checkIsLonely(const std::string& playerMove, char color) const;
+
+public:
+    /**
+     * Inits an empty board
+     */
+    Board();
+
+    /**
+     * 
+     * @param playerMove string repressing the player's move. Can be QUIT, PASS or a place on the board (e.g. E5 or something)
+     * @param symbol
+     * @return true if the move was valid and was played successfully
+     */
+    bool insert(const std::string& playerMove, char symbol);
+    bool canFlipInDirection(int startRow, int startCol, int dRow, int dCol, char color) const;
+
+    /**
+     * Prints the grid, hopefully with colors
+     */
+    void display() const;
+    bool check(const std::string& playerMove) const;
+
+    bool allWhite() const;
+
+    bool allBlack() const;
+
 
 };
 

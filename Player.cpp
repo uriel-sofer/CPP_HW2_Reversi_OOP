@@ -19,7 +19,7 @@ bool Player::isQuitter() const {
     return this->quitter;
 }
 
-void Player::setQuitter(bool quitter)
+void Player::setQuitter(const bool quitter)
 {
     this->quitter = quitter;
 }
@@ -47,7 +47,11 @@ void Player::makeMove()
     {
         return;
     }
-
-    this->board.insert(move, color);
+    bool madeMove = this->board.insert(toUpper(move), color);;
+    while (!madeMove)
+    {
+        cerr << "Please enter a valid move: " << endl;
+        madeMove = this->board.insert(toUpper(promptMove()), color);;
+    }
 }
 

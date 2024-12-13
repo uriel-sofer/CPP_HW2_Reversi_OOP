@@ -11,6 +11,10 @@ string toUpper(const string& s) {
         if (s[i] >= 'a' && s[i] <= 'z') {
             result += (s[i] - 'a' + 'A');
         }
+        else
+        {
+            result += s[i];
+        }
     }
     return result;
 }
@@ -21,6 +25,10 @@ string toLower(const string& s) {
     for (unsigned int i = 0; i < s.length(); i++) {
         if (s[i] >= 'A' && s[i] <= 'Z') {
             result += (s[i] - 'A' + 'a');
+        }
+        else
+        {
+            result += s[i];
         }
     }
     return result;
