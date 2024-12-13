@@ -1,18 +1,22 @@
 #include "Player.h"
 #include "Board.h"
-
+#include "StringUtils.h"
 
 using namespace std;
 
-Player::Player(char color, Board& board): board(board), color(color)
+Player::Player(const char color, Board& board) : color(color), board(board)
 {
     this->board = board;
     quitter = false;
 }
 
-char Player::getColor()
+char Player::getColor() const
 {
     return this->color;
+}
+
+bool Player::isQuitter() const {
+    return this->quitter;
 }
 
 void Player::setQuitter(bool quitter)
@@ -31,7 +35,8 @@ std::string Player::promptMove() const
 
 void Player::makeMove()
 {
-    string move = promptMove();
+    const string move = toUpper(promptMove());
+
     if (move == "QUIT")
     {
         quitter = true;
@@ -43,7 +48,6 @@ void Player::makeMove()
         return;
     }
 
-    this->board.insert(move);
-
+    this->board.insert(move, color);
 }
 

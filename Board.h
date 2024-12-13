@@ -1,7 +1,6 @@
 #ifndef GRID_H
 #define GRID_H
-
-using namespace std;
+#include <iostream>
 
 enum square_state
 {
@@ -25,15 +24,15 @@ constexpr int COLUMNS = 8;
 class Board {
 private:
     square_state grid[ROWS][COLUMNS]{};
-    square_state get(char row, char col) const;
+    square_state get(int row, char col) const;
     void set(int row, char col, square_state state);
 
     /**
-     * Attempts to flip the piece at (row, col)
-     * @param row row (staring from 1 to 8)
-     * @param col col (starting from A to H)
+     * returns true if the move flipped some pieces
+     * @param playerMove
+     * @param color
      */
-    bool flip(int row, char col);
+    bool isMoveValid(const std::string &playerMove, char color);
 
     /**
      * checks if index is on the grid
@@ -56,6 +55,14 @@ private:
      */
     int convertCol(char col) const;
 
+    /**
+     *
+     * @param symbol the player's symbol
+     * @return corresponding square_state
+     */
+    square_state convertSymbol(char symbol) const;
+
+    square_state oppositeSymbol(char symbol) const;
 
 public:
     /**
@@ -65,17 +72,35 @@ public:
 
     /**
      * 
-     * @param playerMove string represting the player's move. Can be QUIT, PASS or a place on the borad (e.g E5 or something)
+     * @param playerMove string repressing the player's move. Can be QUIT, PASS or a place on the board (e.g. E5 or something)
+     * @param symbol
      * @return true if the move was valid and was played successfully
      */
-    bool insert(string& playerMove);
+    bool insert(const std::string& playerMove, char symbol);
 
     /**
      * Prints the grid, hopefully with colors
      */
     void display() const;
+
+    bool allWhite() const;
+
+    bool allBlack() const;
+
+    /**
+     * Checks if there is another token in any valid direction
+     * @return true if there is (que to flip)
+     */
+    bool checkAlly(std::string& playerMove, char color) const;
+
+    bool checkAllyRow(const std::string& playerMove, char color) const;
+
+    bool checkAllyCol(const std::string& playerMove, char color) const;
+
+    bool checkAllyDiag(const std::string& playerMove, char color)const;
+
+    bool checkIsLonely(const std::string& playerMove, char color) const;
+
 };
-
-
 
 #endif //GRID_H

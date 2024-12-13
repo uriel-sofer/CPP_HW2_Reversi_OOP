@@ -7,4 +7,9 @@ add_executable(HW2_Reversi_OOP main.cpp
         Board.cpp
         Board.h
         Player.cpp
-        Player.h)
+        Player.h
+        Game.cpp
+        Game.h
+        StringUtils.cpp
+        StringUtils.h
+)
