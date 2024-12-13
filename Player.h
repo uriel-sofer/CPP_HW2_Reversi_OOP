@@ -2,23 +2,43 @@
 #define PLAYER_H
 #include <string>
 #include <iostream>
-
 #include "Board.h"
+
+enum moveType
+{
+    Quit,
+    Pass,
+    Index,
+    Invalid
+};
 
 /**
  * Class representing the player:
  * Color is 'W' or 'B'
  */
 class Player {
-    private:
+private:
     char const color;
     Board& board;
     bool quitter;
 
-private:
+    /**
+     * Checks if the string is according to move format (len = 2, letter and number)
+     * @param input the player's move string
+     * @return true when can be a move
+     */
+    bool isBoardIndex(const std::string& input);
+
+    /**
+     *
+     * @param input Parses the move to see what it is from the four types of input
+     * @return the move type
+     */
+    moveType parseMove(const std::string& input);
+
     std::string promptMove() const;
 
-    public:
+public:
     Player(char color, Board& board);
 
     char getColor() const;
@@ -30,7 +50,5 @@ private:
      */
     void makeMove();
 };
-
-
 
 #endif //PLAYER_H

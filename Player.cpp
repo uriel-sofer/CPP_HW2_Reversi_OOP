@@ -28,30 +28,63 @@ void Player::setQuitter(const bool quitter)
 std::string Player::promptMove() const
 {
     string input;
-    cout << color << ":" << endl;
+    cout << toUpper(color) << ":" << endl;
     cin >> input;
     return input;
 }
 
 void Player::makeMove()
 {
-    const string move = toUpper(promptMove());
+    string move = toUpper(promptMove());
+    bool moveDone;
 
-    if (move == "QUIT")
+    switch (parseMove(move))
     {
-        quitter = true;
-        return;
-    }
+        case Quit:
+            quitter = true;
+            return;
 
-    if (move == "PASS")
-    {
-        return;
-    }
-    bool madeMove = this->board.insert(toUpper(move), color);;
-    while (!madeMove)
-    {
-        cerr << "Please enter a valid move: " << endl;
-        madeMove = this->board.insert(toUpper(promptMove()), color);;
+
+        case Pass:
+            cout << toUpper(color) << ": PASS" << endl;
+            return;
+
+        case Index:
+            moveDone = this->board.insert(toUpper(move), color);
+            while (not moveDone)
+            {
+                cerr << "Invalid Move; the game awaits a valid move." << endl;
+                move = toUpper(promptMove());
+                moveDone = this->board.insert(toUpper(move), color);
+            }
+            return;
+
+        default:
+            while (parseMove(move) == Invalid)
+            {
+                cerr << "Invalid Move; the game awaits a valid move." << endl;
+            }
+            this->board.insert(toUpper(promptMove()), color);
+
     }
 }
 
+moveType Player::parseMove(const string& input)
+{
+    if (input == "QUIT") return Quit;
+    if (input == "PASS") return Pass;
+    if (isBoardIndex(input)) return Index;
+    return Invalid;
+}
+
+bool Player::isBoardIndex(const string& input)
+{
+    const string move = toUpper(input);
+    if (move.length() == 2
+        and (move[0] >= 'A' or move [0] <= 'A' + ROWS - 1)
+        and (move[1] >= 1 or move [1] <= COLUMNS))
+    {
+        return true;
+    }
+    return false;
+}

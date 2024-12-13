@@ -21,8 +21,11 @@ enum square_state
 constexpr int ROWS = 8;
 constexpr int COLUMNS = 8;
 
-class Board {
+class Board
+{
 private:
+    int whites;
+    int blacks;
     square_state grid[ROWS][COLUMNS]{};
 
     square_state get(int row, char col) const;
@@ -34,7 +37,7 @@ private:
      * @param playerMove
      * @param color
      */
-    bool isMoveValid(const std::string &playerMove, char color) const;
+    bool isMoveValid(const std::string& playerMove, char color) const;
 
     /**
      * checks if index is on the grid
@@ -70,20 +73,6 @@ private:
 
     bool canFlip(int row, int col, int dRow, int dCol, char symbol) const;
 
-    /**
-     * Checks if there is another token in any valid direction
-     * @return true if there is (que to flip)
-     */
-    bool checkAlly(std::string& playerMove, char color) const;
-
-    bool checkAllyRow(const std::string& playerMove, char color) const;
-
-    bool checkAllyCol(const std::string& playerMove, char color) const;
-
-    bool checkAllyDiag(const std::string& playerMove, char color)const;
-
-    bool checkIsLonely(const std::string& playerMove, char color) const;
-
 public:
     /**
      * Inits an empty board
@@ -97,19 +86,25 @@ public:
      * @return true if the move was valid and was played successfully
      */
     bool insert(const std::string& playerMove, char symbol);
+
     bool canFlipInDirection(int startRow, int startCol, int dRow, int dCol, char color) const;
 
+    int getWhites() const;
+
+    int getBlacks() const;
     /**
      * Prints the grid, hopefully with colors
      */
     void display() const;
+
+    /**
+     * 
+     * @param playerMove string representing the player's move
+     * @return true if in bounds
+     */
     bool check(const std::string& playerMove) const;
 
-    bool allWhite() const;
-
-    bool allBlack() const;
-
-
+    bool isFull() const;
 };
 
 #endif //GRID_H

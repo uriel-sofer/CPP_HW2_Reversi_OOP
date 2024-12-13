@@ -16,11 +16,11 @@ private:
     bool currentPlayer;
 
     bool checkQuitters() const;
-    bool checkWinner() const;
 
 public:
     Game();
 
+    Board getBoard() const;
     void play();
 
 };

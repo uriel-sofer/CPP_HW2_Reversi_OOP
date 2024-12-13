@@ -1,31 +1,52 @@
 #include "Game.h"
 
-Game::Game() : players{Player('b', board), Player('w', board)} {
+#include "StringUtils.h"
+
+Game::Game() : players{Player('b', board), Player('w', board)}
+{
     currentPlayer = false;
 }
 
+Board Game::getBoard() const
+{
+    return board;
+}
+
 void Game::play() {
-    while (!checkQuitters()) {
+    while (!checkQuitters())
+    {
         board.display();
         currentPlayer ? players[1].makeMove() : players[0].makeMove();
         currentPlayer = !currentPlayer;
-        if (checkWinner()) {
+        if (board.isFull()) {
             board.display();
-            cout << "Player " << players[currentPlayer].getColor() << " wins!" << endl;
+
+            if (board.isFull())
+            {
+                const int whiteTokens = board.getWhites();
+                const int blackTokens = board.getBlacks();
+                board.display();
+
+                if (whiteTokens > blackTokens)
+                    cout << "W wins the game" << endl;
+                else if (blackTokens > whiteTokens)
+                    cout << "B wins the game" << endl;
+                else
+                    cout << "The game ends in a tie" << endl;
+
+                return;
+            }
         }
     }
+
+    if (players[!currentPlayer].isQuitter())
+    {
+        cout << toUpper(players[!currentPlayer].getColor()) << ": QUIT" << endl;
+        cout << toUpper(players[currentPlayer].getColor()) << " wins the game.";
+    }
+
 }
 
 bool Game::checkQuitters() const {
-    return players[0].isQuitter() && players[1].isQuitter();
-}
-
-bool Game::checkWinner() const {
-    if (board.allBlack())
-        return true;
-
-    if (board.allWhite())
-        return true;
-
-    return false;
+    return players[0].isQuitter() or players[1].isQuitter();
 }

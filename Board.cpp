@@ -8,6 +8,9 @@ using namespace std;
 
 Board::Board()
 {
+    whites = 2;
+    blacks = 2;
+
     for (int i = 0; i < 8; i++)
     {
         for (int j = 0; j < 8; j++)
@@ -45,6 +48,17 @@ void Board::set(const int row, const char col, char symbol)
     }
 }
 
+int Board::getBlacks() const
+{
+    return blacks;
+}
+
+int Board::getWhites() const
+{
+    return whites;
+}
+
+
 bool Board::isMoveValid(const string &playerMove, const char color) const
 {
     if (!check(playerMove))
@@ -69,13 +83,17 @@ bool Board::insert(const string& playerMove, const char symbol)
 {
     if (!isMoveValid(playerMove, symbol))
         {
-            cerr << "Invalid move" << endl;
             return false;
         }
 
     const int row = playerMove[1] - '0';
     const int col = convertCol(playerMove[0]);
     grid[row - 1][col - 1] = convertSymbol(symbol);
+
+    if (toUpper(symbol) == 'W')
+        whites++;
+    else if (toUpper(symbol) == 'B')
+        blacks++;
 
     flipTokens(row, col, symbol);
     return true;
@@ -151,6 +169,7 @@ void Board::display() const
         {
             cout << printSingleState(grid[i][j]) << " ";
         }
+        cout << endl << endl;
         //cout << i + 1<< endl << endl; Add rows numbers
     }
     // Add columns letters
@@ -207,10 +226,14 @@ square_state Board::oppositeSymbol(const char symbol) const {
 }
 
 
-bool Board::allWhite() const {
-    for (int i = 0; i < ROWS; i++) {
-        for (int j = 0; j < COLUMNS; j++) {
-            if (grid[i][j] != White) {
+bool Board::isFull() const
+{
+    for (int i = 0; i < ROWS; i++)
+    {
+        for (int j = 0; j < COLUMNS; j++)
+        {
+            if (grid[i][j] == Empty)
+            {
                 return false;
             }
         }
@@ -218,76 +241,7 @@ bool Board::allWhite() const {
     return true;
 }
 
-bool Board::allBlack() const {
-    for (int i = 0; i < ROWS; i++) {
-        for (int j = 0; j < COLUMNS; j++) {
-            if (grid[i][j] != Black) {
-                return false;
-            }
-        }
-    }
-    return true;
-}
 
 
-bool Board::checkAllyRow(const std::string &playerMove, const char color) const {
-    const int col = convertCol(playerMove[0]);
-    const int row = playerMove[1] - '0';
-
-    int enemyTokens = 0;
-    // Check right
-    for (int i = col + 1; i < ROWS; i++) {
-        if (grid[row][i] == oppositeSymbol(color)) {
-            enemyTokens++;
-        }
-        else if (grid[row][i] == Empty) {
-            return false;
-        }
-    }
-
-    enemyTokens = 0;
-    // Check left
-    for (int i = col - 1; i >= 0; i--) {
-        if (grid[row][i] == oppositeSymbol(color)) {
-            enemyTokens++;
-        }
-        else if (grid[row][i] == Empty) {
-            return false;
-        }
-    }
-
-    return true;
-}
-
-bool Board::checkAllyCol(const std::string &playerMove, const char color) const {
-    const int col = convertCol(playerMove[0]);
-    const int row = playerMove[1] - '0';
-
-    int enemyTokens = 0;
-    for (int i = row + 1; i < COLUMNS; i++) {
-        if (grid[i][col] == oppositeSymbol(color)) {
-            enemyTokens++;
-        }
-        else if (grid[i][col] == Empty) {
-            return false;
-        }
-    }
-
-    enemyTokens = 0;
-    for (int i = row - 1; i >= 0; i--) {
-        if (grid[i][col] == oppositeSymbol(color)) {
-            enemyTokens++;
-        }
-        else if (grid[i][col] == Empty) {
-            return false;
-        }
-    }
-
-    return true;
-}
-/*
-bool Board::checkAllyDiag(const std::string &playerMove, char color) const {
-
-}*/
 
 
