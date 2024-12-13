@@ -69,9 +69,12 @@ private:
 
     square_state oppositeSymbol(char symbol) const;
 
+ //TODO: Study these
     void flipTokens(int row, int col, char symbol);
 
     bool canFlip(int row, int col, int dRow, int dCol, char symbol) const;
+
+    bool checkFlipDirections(char color, int row, int col) const;
 
 public:
     /**
@@ -86,7 +89,7 @@ public:
      * @return true if the move was valid and was played successfully
      */
     bool insert(const std::string& playerMove, char symbol);
-
+//TODO: and this
     bool canFlipInDirection(int startRow, int startCol, int dRow, int dCol, char color) const;
 
     int getWhites() const;

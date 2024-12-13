@@ -58,7 +58,6 @@ int Board::getWhites() const
     return whites;
 }
 
-
 bool Board::isMoveValid(const string &playerMove, const char color) const
 {
     if (!check(playerMove))
@@ -69,14 +68,19 @@ bool Board::isMoveValid(const string &playerMove, const char color) const
     const int row = playerMove[1] - '0';
     const int col = convertCol(playerMove[0]);
 
-    return canFlipInDirection(row, col, -1, 0, color) || // Up
-           canFlipInDirection(row, col, 1, 0, color) ||  // Down
-           canFlipInDirection(row, col, 0, -1, color) || // Left
-           canFlipInDirection(row, col, 0, 1, color) ||  // Right
-           canFlipInDirection(row, col, -1, -1, color) || // Up-Left
-           canFlipInDirection(row, col, -1, 1, color) ||  // Up-Right
-           canFlipInDirection(row, col, 1, -1, color) ||  // Down-Left
-           canFlipInDirection(row, col, 1, 1, color);     // Down-Right
+    return checkFlipDirections(color, row, col);
+}
+
+bool Board::checkFlipDirections(const char color, const int row, const int col) const
+{
+    return canFlipInDirection(row, col, -1, 0, color) or // Up
+        canFlipInDirection(row, col, 1, 0, color) or // Down
+        canFlipInDirection(row, col, 0, -1, color) or // Left
+        canFlipInDirection(row, col, 0, 1, color) or // Right
+        canFlipInDirection(row, col, -1, -1, color) or // Up-Left
+        canFlipInDirection(row, col, -1, 1, color) or // Up-Right
+        canFlipInDirection(row, col, 1, -1, color) or // Down-Left
+        canFlipInDirection(row, col, 1, 1, color); // Down-Right
 }
 
 bool Board::insert(const string& playerMove, const char symbol)
