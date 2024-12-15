@@ -161,9 +161,11 @@ void Board::display() const
     {
         for (int j = 0; j < COLUMNS; j++)
         {
-            cout << printSingleState(grid[i][j]) << " ";
+            cout << printSingleState(grid[i][j]);
+            if (j != COLUMNS - 1)
+                cout << " ";
         }
-        cout << endl << endl;
+        cout << endl;
         //cout << i + 1<< endl << endl; //Add rows numbers, debug but looks much better
     }
     //Add columns letters, debug
@@ -171,7 +173,6 @@ void Board::display() const
     // {
     //     cout << (char)('A' + i) << " ";
     // }
-    cout << endl << endl;
 }
 
 bool Board::check(const string& playerMove) const

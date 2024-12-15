@@ -8,6 +8,7 @@ Player::Player(const char color, Board& board) : color(color), board(board)
 {
     this->board = board;
     quitter = false;
+    passer = false;
 }
 
 char Player::getColor() const
@@ -24,6 +25,17 @@ void Player::setQuitter(const bool quitter)
     this->quitter = quitter;
 }
 
+bool Player::isPasser() const
+{
+    return this->passer;
+}
+
+void Player::setPasser(const bool passer)
+{
+    this->passer = passer;
+}
+
+
 std::string Player::promptMove() const
 {
     string input;
@@ -35,7 +47,7 @@ std::string Player::promptMove() const
 void Player::makeMove()
 {
     bool moveDone = false;
-
+    passer = false;
     while (!moveDone)
     {
         string move = toUpper(promptMove());
@@ -47,7 +59,8 @@ void Player::makeMove()
                 return;
 
             case Pass:
-                cout << toUpper(color) << ": PASS" << endl << endl;
+                cout << toUpper(color) << ": PASS" << endl;
+                passer = true;
                 return;
 
             case Index:

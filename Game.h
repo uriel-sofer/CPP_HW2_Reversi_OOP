@@ -16,6 +16,7 @@ private:
     bool currentPlayer;
 
     bool checkQuitters() const;
+    bool checkPassers() const;
 
 public:
     Game();

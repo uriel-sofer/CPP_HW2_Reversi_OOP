@@ -22,6 +22,7 @@ private:
     char const color;
     Board& board;
     bool quitter;
+    bool passer;
 
     /**
      * Checks if the string is according to move format (len = 2, letter and number)
@@ -45,6 +46,9 @@ public:
     char getColor() const;
     bool isQuitter() const;
     void setQuitter(bool quitter);
+
+    bool isPasser() const;
+    void setPasser(bool passer);
 
     /**
      * Prompts the user/player for a square and tries to take it

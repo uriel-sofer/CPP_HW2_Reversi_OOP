@@ -13,7 +13,7 @@ Board Game::getBoard() const
 }
 
 void Game::play() {
-    while (!checkQuitters())
+    while (!checkQuitters() and !checkPassers())
     {
         board.display();
         currentPlayer ? players[1].makeMove() : players[0].makeMove();
@@ -31,8 +31,6 @@ void Game::play() {
                     cout << "W wins the game" << endl;
                 else if (blackTokens > whiteTokens)
                     cout << "B wins the game" << endl;
-                else
-                    cout << "The game ends in a tie" << endl;
 
                 return;
             }
@@ -41,12 +39,20 @@ void Game::play() {
 
     if (players[!currentPlayer].isQuitter())
     {
-        cout << toUpper(players[!currentPlayer].getColor()) << ": QUIT" << endl << endl;
+        cout << toUpper(players[!currentPlayer].getColor()) << ": QUIT" << endl;
         cout << toUpper(players[currentPlayer].getColor()) << " wins the game.";
     }
+    else
+        cout << "The game ends in a tie." << endl;
 
 }
 
-bool Game::checkQuitters() const {
+bool Game::checkQuitters() const
+{
     return players[0].isQuitter() or players[1].isQuitter();
+}
+
+bool Game::checkPassers() const
+{
+    return players[0].isPasser() and players[1].isPasser();
 }
