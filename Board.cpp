@@ -177,10 +177,10 @@ void Board::display() const
         //cout << i + 1<< endl << endl; //Add rows numbers
     }
     //Add columns letters
-    for (int i = 0; i < COLUMNS; i++)
-    {
-        cout << (char)('A' + i) << " ";
-    }
+    // for (int i = 0; i < COLUMNS; i++)
+    // {
+    //     cout << (char)('A' + i) << " ";
+    // }
     cout << endl << endl;
 }
 
