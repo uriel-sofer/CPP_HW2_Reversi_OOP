@@ -197,7 +197,7 @@ bool Board::check(const int row, const int col) const
     return row >= 1 && row <= ROWS && col >= 1 && col <= COLUMNS;
 }
 
-char Board::printSingleState(square_state state) const
+char Board::printSingleState(const square_state state) const
 {
     switch (state)
     {
