@@ -173,8 +173,8 @@ void Board::display() const
         {
             cout << printSingleState(grid[i][j]) << " ";
         }
-        //cout << endl << endl;
-        cout << i + 1<< endl << endl; //Add rows numbers
+        cout << endl << endl;
+        //cout << i + 1<< endl << endl; //Add rows numbers
     }
     //Add columns letters
     for (int i = 0; i < COLUMNS; i++)
