@@ -208,7 +208,7 @@ char Board::printSingleState(square_state state) const
 }
 
 
-int Board::convertCol(char col) const
+int Board::convertCol(const char col) const
 {
     return col - 'A' + 1;
 }
