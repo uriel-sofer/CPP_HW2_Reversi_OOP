@@ -86,47 +86,52 @@ bool Board::isMoveValid(const std::string& playerMove, const char color) const
     return canFlipInAnyDirection(color, row, col);
 }
 
-bool Board::canFlipInAnyDirection(const char color, const int row, const int col) const {
-    // Check all directions for potential flips
-    for (int dRow = -1; dRow <= 1; ++dRow) {
-        for (int dCol = -1; dCol <= 1; ++dCol) {
+bool Board::canFlipInAnyDirection(const char color, const int row, const int col) const
+{
+    for (int dRow = -1; dRow <= 1; ++dRow)
+    {
+        for (int dCol = -1; dCol <= 1; ++dCol)
+        {
             if (dRow == 0 && dCol == 0) continue; // Skip the current position
 
-            if (canFlipInDirection(row, col, dRow, dCol, color)) {
+            if (canFlipInDirection(row, col, dRow, dCol, color))
                 return true;
-            }
         }
     }
     return false;
 }
 
-void Board::flipTokens(const int row, const int col, const char symbol) {
-    for (int dRow = -1; dRow <= 1; ++dRow) {
-        for (int dCol = -1; dCol <= 1; ++dCol) {
+void Board::flipTokens(const int row, const int col, const char symbol)
+{
+    for (int dRow = -1; dRow <= 1; ++dRow)
+    {
+        for (int dCol = -1; dCol <= 1; ++dCol)
+        {
             if (dRow == 0 && dCol == 0) continue; // Skip the current position
 
-            if (canFlipInDirection(row, col, dRow, dCol, symbol)) {
+            if (canFlipInDirection(row, col, dRow, dCol, symbol))
+            {
                 flipInDirection(row, col, dRow, dCol, symbol);
             }
         }
     }
 }
 
-bool Board::canFlipInDirection(const int startRow, const int startCol, const int dRow, const int dCol, const char color) const {
+bool Board::canFlipInDirection(const int startRow, const int startCol, const int dRow, const int dCol, const char color) const
+{
     int currentRow = startRow + dRow;
     int currentCol = startCol + dCol;
 
     bool foundOpponent = false;
 
-    while (check(currentRow, currentCol)) {
+    while (check(currentRow, currentCol))
+    {
         const square_state currentSquare = grid[currentRow - 1][currentCol - 1];
 
-        if (currentSquare == Empty) {
+        if (currentSquare == Empty)
             return false;
-        }
-        if (currentSquare == convertSymbol(color)) {
-            return foundOpponent; // Flip is valid if at least one opponent token was found
-        }
+        if (currentSquare == convertSymbol(color))
+            return foundOpponent; // Flip is valid if at least one opponent token was already found
 
         foundOpponent = true; // Opponent token found
         currentRow += dRow;
@@ -136,12 +141,14 @@ bool Board::canFlipInDirection(const int startRow, const int startCol, const int
     return false; // Out of bounds
 }
 
-void Board::flipInDirection(const int startRow, const int startCol, const int dRow, const int dCol, const char symbol) {
+void Board::flipInDirection(const int startRow, const int startCol, const int dRow, const int dCol, const char symbol)
+{
     int currentRow = startRow + dRow;
     int currentCol = startCol + dCol;
 
-    while (grid[currentRow - 1][currentCol - 1] == oppositeSymbol(symbol)) {
-        grid[currentRow - 1][currentCol - 1] = convertSymbol(symbol); // Flip the token
+    while (grid[currentRow - 1][currentCol - 1] == oppositeSymbol(symbol))
+    {
+        grid[currentRow - 1][currentCol - 1] = convertSymbol(symbol);
         currentRow += dRow;
         currentCol += dCol;
     }
@@ -157,9 +164,9 @@ void Board::display() const
             cout << printSingleState(grid[i][j]) << " ";
         }
         cout << endl << endl;
-        //cout << i + 1<< endl << endl; //Add rows numbers
+        //cout << i + 1<< endl << endl; //Add rows numbers, debug but looks much better
     }
-    //Add columns letters
+    //Add columns letters, debug
     // for (int i = 0; i < COLUMNS; i++)
     // {
     //     cout << (char)('A' + i) << " ";
@@ -196,16 +203,20 @@ int Board::convertCol(const char col) const
     return col - 'A' + 1;
 }
 
-square_state Board::convertSymbol(const char symbol) const {
-    switch (symbol) {
+square_state Board::convertSymbol(const char symbol) const
+{
+    switch (symbol)
+    {
         case 'b': return Black;
         case 'w': return White;
         default: return Empty;
     }
 }
 
-square_state Board::oppositeSymbol(const char symbol) const {
-    switch (toUpper(symbol)) {
+square_state Board::oppositeSymbol(const char symbol) const
+{
+    switch (toUpper(symbol))
+    {
         case 'B': return White;
         case 'W': return Black;
         default: return Empty;
@@ -216,15 +227,9 @@ square_state Board::oppositeSymbol(const char symbol) const {
 bool Board::isFull() const
 {
     for (int i = 0; i < ROWS; i++)
-    {
         for (int j = 0; j < COLUMNS; j++)
-        {
             if (grid[i][j] == Empty)
-            {
                 return false;
-            }
-        }
-    }
     return true;
 }
 
