@@ -19,10 +19,10 @@ Board::Board()
         }
     }
 
-    grid[3][3] = Black;
-    grid[3][4] = White;
-    grid[4][3] = White;
-    grid[4][4] = Black;
+    grid[3][3] = White;
+    grid[3][4] = Black;
+    grid[4][3] = Black;
+    grid[4][4] = White;
 }
 
 
@@ -173,15 +173,15 @@ void Board::display() const
         {
             cout << printSingleState(grid[i][j]) << " ";
         }
-        cout << endl << endl;
-        //cout << i + 1<< endl << endl; Add rows numbers
+        //cout << endl << endl;
+        cout << i + 1<< endl << endl; //Add rows numbers
     }
-    // Add columns letters
-    // for (int i = 0; i < COLUMNS; i++)
-    // {
-    //     cout << (char)('A' + i) << " ";
-    // }
-    // cout << endl << endl;
+    //Add columns letters
+    for (int i = 0; i < COLUMNS; i++)
+    {
+        cout << (char)('A' + i) << " ";
+    }
+    cout << endl << endl;
 }
 
 bool Board::check(const string& playerMove) const
