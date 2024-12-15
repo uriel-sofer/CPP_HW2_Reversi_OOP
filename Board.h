@@ -41,8 +41,8 @@ private:
 
     /**
      * checks if index is on the grid
-     * @param row row (staring from 1 to 8)
-     * @param col col (starting from A to H)
+     * @param row row (staring from 1 to ROWS)
+     * @param col col (starting from A to COLLUMNS)
      * @return true if in bounds, false if out of bounds
      */
     bool check(int row, int col) const;
@@ -61,7 +61,6 @@ private:
     int convertCol(char col) const;
 
     /**
-     *
      * @param symbol the player's symbol
      * @return corresponding square_state
      */
@@ -69,13 +68,13 @@ private:
 
     square_state oppositeSymbol(char symbol) const;
 
- //TODO: Study these
     void flipTokens(int row, int col, char symbol);
 
     bool canFlip(int row, int col, int dRow, int dCol, char symbol) const;
 
     bool checkFlipDirections(char color, int row, int col) const;
 
+    bool canFlipInDirection(int startRow, int startCol, int dRow, int dCol, char color) const;
 public:
     /**
      * Inits an empty board
@@ -83,14 +82,12 @@ public:
     Board();
 
     /**
-     * 
+     *
      * @param playerMove string repressing the player's move. Can be QUIT, PASS or a place on the board (e.g. E5 or something)
      * @param symbol
      * @return true if the move was valid and was played successfully
      */
     bool insert(const std::string& playerMove, char symbol);
-//TODO: and this
-    bool canFlipInDirection(int startRow, int startCol, int dRow, int dCol, char color) const;
 
     int getWhites() const;
 
@@ -101,7 +98,7 @@ public:
     void display() const;
 
     /**
-     * 
+     *
      * @param playerMove string representing the player's move
      * @return true if in bounds
      */
