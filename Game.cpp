@@ -41,7 +41,7 @@ void Game::play() {
 
     if (players[!currentPlayer].isQuitter())
     {
-        cout << toUpper(players[!currentPlayer].getColor()) << ": QUIT" << endl;
+        cout << toUpper(players[!currentPlayer].getColor()) << ": QUIT" << endl << endl;
         cout << toUpper(players[currentPlayer].getColor()) << " wins the game.";
     }
 

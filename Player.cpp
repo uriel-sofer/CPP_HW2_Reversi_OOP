@@ -24,7 +24,6 @@ void Player::setQuitter(const bool quitter)
     this->quitter = quitter;
 }
 
-
 std::string Player::promptMove() const
 {
     string input;
@@ -35,40 +34,35 @@ std::string Player::promptMove() const
 
 void Player::makeMove()
 {
-    string move = toUpper(promptMove());
-    bool moveDone;
+    bool moveDone = false;
 
-    switch (parseMove(move))
-    {
-        case Quit:
-            quitter = true;
+    while (!moveDone) {
+        string move = toUpper(promptMove());
+
+        // Parse and handle the move
+        switch (parseMove(move)) {
+            case Quit:
+                quitter = true;
             return;
 
-
-        case Pass:
-            cout << toUpper(color) << ": PASS" << endl;
+            case Pass:
+                cout << toUpper(color) << ": PASS" << endl << endl;
             return;
 
-        case Index:
-            moveDone = this->board.insert(toUpper(move), color);
-            while (not moveDone)
-            {
-                cerr << "Invalid Move; the game awaits a valid move." << endl;
-                move = toUpper(promptMove());
-                moveDone = this->board.insert(toUpper(move), color);
-            }
-            return;
+            case Index:
+                if (this->board.insert(move, color)) {
+                    moveDone = true; // Move successfully inserted
+                } else {
+                    cerr << "Invalid Move; the game awaits a valid move." << endl;
+                }
+            break;
 
-        default:
-            while (parseMove(move) == Invalid)
-            {
-                cerr << "Invalid Move; the game awaits a valid move." << endl;
-            }
-            this->board.insert(toUpper(promptMove()), color);
-
+            default:
+                cerr << "Invalid input; please enter a valid move (index, Quit, or Pass)." << endl;
+            break;
+        }
     }
 }
-
 moveType Player::parseMove(const string& input)
 {
     if (input == "QUIT") return Quit;
