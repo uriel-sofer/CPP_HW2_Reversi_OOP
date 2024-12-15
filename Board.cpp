@@ -58,6 +58,26 @@ int Board::getWhites() const
     return whites;
 }
 
+bool Board::insert(const string& playerMove, const char symbol)
+{
+    if (!isMoveValid(playerMove, symbol))
+    {
+        return false;
+    }
+
+    const int row = playerMove[1] - '0';
+    const int col = convertCol(playerMove[0]);
+    grid[row - 1][col - 1] = convertSymbol(symbol);
+
+    if (toUpper(symbol) == 'W')
+        whites++;
+    else if (toUpper(symbol) == 'B')
+        blacks++;
+
+    flipTokens(row, col, symbol);
+    return true;
+}
+
 bool Board::isMoveValid(const string &playerMove, const char color) const
 {
     if (!check(playerMove))
