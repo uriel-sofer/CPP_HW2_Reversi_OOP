@@ -15,6 +15,7 @@ enum moveType
 /**
  * Class representing the player:
  * Color is 'W' or 'B'
+ * There is no  use for the Big 5 so the defaults are enough
  */
 class Player {
 private:

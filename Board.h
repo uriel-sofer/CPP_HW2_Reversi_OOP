@@ -40,6 +40,15 @@ private:
     bool isMoveValid(const std::string& playerMove, char color) const;
 
     /**
+     * Checks all 8 possible directions for valid flips.
+     * @param color The symbol of the current player (e.g., 'W' or 'B').
+     * @param row The row index of the move.
+     * @param col The column index of the move.
+     * @return True if a flip is possible in any direction, false otherwise.
+     */
+    bool canFlipInAnyDirection(char color, int row, int col) const;
+
+    /**
      * checks if index is on the grid
      * @param row row (staring from 1 to ROWS)
      * @param col col (starting from A to COLLUMNS)
@@ -66,15 +75,41 @@ private:
      */
     square_state convertSymbol(char symbol) const;
 
+    /**
+     * @param symbol the symbol to get the opposite of
+     * @return opposite of the symbol
+     */
     square_state oppositeSymbol(char symbol) const;
 
+    /**
+     * Flips tokens in all valid directions based on the current move.
+     * @param row The row index of the move.
+     * @param col The column index of the move.
+     * @param symbol The symbol of the current player (e.g., 'W' or 'B').
+     */
     void flipTokens(int row, int col, char symbol);
 
-    bool canFlip(int row, int col, int dRow, int dCol, char symbol) const;
-
-    bool checkFlipDirections(char color, int row, int col) const;
-
+    /**
+     * Checks if tokens can be flipped in a specific direction.
+     * @param startRow The starting row index.
+     * @param startCol The starting column index.
+     * @param dRow The row direction (e.g., -1 for up, 1 for down).
+     * @param dCol The column direction (e.g., -1 for left, 1 for right).
+     * @param color The symbol of the current player (e.g., 'W' or 'B').
+     * @return True if a flip is possible in the specified direction, false otherwise.
+     */
     bool canFlipInDirection(int startRow, int startCol, int dRow, int dCol, char color) const;
+
+    /**
+     * Flips tokens in a specific direction.
+     * @param startRow The starting row index.
+     * @param startCol The starting column index.
+     * @param dRow The row direction (e.g., -1 for up, 1 for down).
+     * @param dCol The column direction (e.g., -1 for left, 1 for right).
+     * @param symbol The symbol of the current player (e.g., 'W' or 'B').
+     */
+    void flipInDirection(int startRow, int startCol, int dRow, int dCol, char symbol);
+
 public:
     /**
      * Inits an empty board
@@ -92,8 +127,9 @@ public:
     int getWhites() const;
 
     int getBlacks() const;
+
     /**
-     * Prints the grid, hopefully with colors
+     * Prints the grid
      */
     void display() const;
 
